@@ -59,118 +59,23 @@ func (c *Client) CreateUser(ctx context.Context, user *model.User) error {
 
 func (c *Client) GetUser(ctx context.Context, id string) (*model.User, error) {
 	query := `--sql
-	SELECT id, username, password, settings, date_created, date_updated FROM users WHERE id = ?`
+	SELECT id, username, password, settings, date_created, date_updated, api_key FROM users WHERE id = ?`
 
-	var (
-		user         model.User
-		settingsJSON string
-	)
-
-	err := c.DB.QueryRowxContext(ctx, query, id).Scan(
-		&user.ID,
-		&user.Username,
-		&user.Password,
-		&settingsJSON,
-		&user.DateCreated,
-		&user.DateUpdated,
-	)
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, model.ErrUserNotFound
-		}
-
-		return nil, errors.Wrap(err, "db")
-	}
-
-	// Parse the JSON settings
-	if settingsJSON != "" {
-		user.Settings = model.NewDefaultUserSettings()
-
-		err = json.Unmarshal([]byte(settingsJSON), user.Settings)
-		if err != nil {
-			return nil, errors.Wrap(err, "failed to unmarshal settings")
-		}
-	}
-
-	return &user, nil
+	return c.fetchUser(ctx, query, id)
 }
 
 func (c *Client) GetUserByUsername(ctx context.Context, username string) (*model.User, error) {
 	query := `--sql
-	SELECT id, username, password, settings, date_created, date_updated FROM users WHERE username = ?`
+	SELECT id, username, password, settings, date_created, date_updated, api_key FROM users WHERE username = ?`
 
-	var (
-		user         model.User
-		settingsJSON string
-	)
-
-	err := c.DB.QueryRowxContext(ctx, query, username).Scan(
-		&user.ID,
-		&user.Username,
-		&user.Password,
-		&settingsJSON,
-		&user.DateCreated,
-		&user.DateUpdated,
-	)
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, model.ErrUserNotFound
-		}
-
-		return nil, errors.Wrap(err, "db")
-	}
-
-	// Parse the JSON settings
-	if settingsJSON != "" {
-		user.Settings = model.NewDefaultUserSettings()
-
-		err = json.Unmarshal([]byte(settingsJSON), user.Settings)
-		if err != nil {
-			return nil, errors.Wrap(err, "failed to unmarshal settings")
-		}
-	}
-
-	return &user, nil
+	return c.fetchUser(ctx, query, username)
 }
 
 func (c *Client) GetUserByApiKey(ctx context.Context, apiKey string) (*model.User, error) {
-	// @TODO: Too much redundancy just to retrieve single user
-
 	query := `--sql
-	SELECT id, username, password, settings, date_created, date_updated FROM users WHERE api_key = ?`
+	SELECT id, username, password, settings, date_created, date_updated, api_key FROM users WHERE api_key = ?`
 
-	var (
-		user         model.User
-		settingsJSON string
-	)
-
-	err := c.DB.QueryRowxContext(ctx, query, apiKey).Scan(
-		&user.ID,
-		&user.Username,
-		&user.Password,
-		&settingsJSON,
-		&user.DateCreated,
-		&user.DateUpdated,
-	)
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, model.ErrUserNotFound
-		}
-
-		return nil, errors.Wrap(err, "db")
-	}
-
-	// Parse the JSON settings
-	if settingsJSON != "" {
-		user.Settings = model.NewDefaultUserSettings()
-
-		err = json.Unmarshal([]byte(settingsJSON), user.Settings)
-		if err != nil {
-			return nil, errors.Wrap(err, "failed to unmarshal settings")
-		}
-	}
-
-	return &user, nil
+	return c.fetchUser(ctx, query, apiKey)
 }
 
 func (c *Client) UpdateUserUsername(ctx context.Context, id string, username string) error {
@@ -268,4 +173,40 @@ func (c *Client) DeleteUser(ctx context.Context, id string) error {
 	}
 
 	return nil
+}
+
+func (c *Client) fetchUser(ctx context.Context, query string, args interface{}) (*model.User, error) {
+	var (
+		user         model.User
+		settingsJSON string
+	)
+
+	err := c.DB.QueryRowxContext(ctx, query, args).Scan(
+		&user.ID,
+		&user.Username,
+		&user.Password,
+		&settingsJSON,
+		&user.DateCreated,
+		&user.DateUpdated,
+		&user.ApiKey,
+	)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, model.ErrUserNotFound
+		}
+
+		return nil, errors.Wrap(err, "db")
+	}
+
+	// Parse the JSON settings
+	if settingsJSON != "" {
+		user.Settings = model.NewDefaultUserSettings()
+
+		err = json.Unmarshal([]byte(settingsJSON), user.Settings)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to unmarshal settings")
+		}
+	}
+
+	return &user, nil
 }
