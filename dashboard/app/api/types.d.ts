@@ -1022,6 +1022,8 @@ export interface components {
     parameters: {
         /** @description Session token for authentication. */
         SessionAuth: string;
+        /** @description Key for accessing instance using API calls. */
+        ApiKey: string;
         /** @description Hostname for the website. */
         Hostname: string;
         /** @description Return a summary of the stats. */
@@ -1102,9 +1104,9 @@ export interface operations {
             query?: never;
             header?: never;
             path?: never;
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1189,11 +1191,14 @@ export interface operations {
     "get-user": {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path?: never;
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1219,9 +1224,9 @@ export interface operations {
             query?: never;
             header?: never;
             path?: never;
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1246,9 +1251,9 @@ export interface operations {
             query?: never;
             header?: never;
             path?: never;
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         /** @description User details to update. */
@@ -1281,9 +1286,9 @@ export interface operations {
             query?: never;
             header?: never;
             path?: never;
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1310,9 +1315,9 @@ export interface operations {
             };
             header?: never;
             path?: never;
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1371,9 +1376,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1402,9 +1407,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1432,9 +1437,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         /** @description Website details to update. */
@@ -1502,9 +1507,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1568,9 +1573,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1634,9 +1639,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1702,9 +1707,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1769,9 +1774,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1836,9 +1841,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1903,9 +1908,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1970,9 +1975,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -2037,9 +2042,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -2104,9 +2109,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -2171,9 +2176,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -2240,9 +2245,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -2305,9 +2310,9 @@ export interface operations {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
             };
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;

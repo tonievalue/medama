@@ -413,11 +413,29 @@ func (s *Server) handleGetUserRequest(args [0]string, argsEscaped bool, w http.R
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetUserOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -464,6 +482,10 @@ func (s *Server) handleGetUserRequest(args [0]string, argsEscaped bool, w http.R
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 			},
 			Raw: r,
 		}

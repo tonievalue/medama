@@ -163,11 +163,13 @@ paths:
         - User
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get User Info
       description: Retrieve the information of the user with the matching user ID.
       operationId: get-user
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
       responses:
         "200":
           description: User Found
@@ -1113,6 +1115,11 @@ components:
       in: cookie
       type: apiKey
       description: Session token for authentication.
+    ApiKey:
+      name: x-api-key
+      in: header
+      type: apiKey
+      description: Key for accessing instance using API calls.
   headers:
     X-Api-Commit:
       description: A custom header used to identify the commit of the API. This can be used to force reload the client if the API has been updated.
@@ -1125,10 +1132,18 @@ components:
       name: _me_sess
       in: cookie
       description: Session token for authentication.
-      required: true
+      required: false
       schema:
         type: string
         example: _me_sess=token; Path=/; HttpOnly; SameSite=Lax; Secure
+    ApiKey:
+      name: x-api-key
+      in: header
+      description: Key for accessing instance using API calls.
+      required: false
+      schema:
+        type: string
+        example: jK7G78zsrah1MrYiHIoJI7b2hQJpZFXggg31Toyjhfw1aYk9gO1Ivk
     Hostname:
       name: hostname
       in: path

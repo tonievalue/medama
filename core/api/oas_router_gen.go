@@ -21,6 +21,7 @@ var (
 		"GET": "If-Modified-Since",
 	}
 	rn1AllowedHeaders = map[string]string{
+		"GET":   "X-Api-Key",
 		"PATCH": "Content-Type",
 	}
 	rn27AllowedHeaders = map[string]string{

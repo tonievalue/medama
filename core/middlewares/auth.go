@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"context"
+	"errors"
 
 	"github.com/medama-io/medama/api"
 	"github.com/medama-io/medama/model"
@@ -39,4 +40,12 @@ func (h *Handler) HandleCookieAuth(
 	ctx = context.WithValue(ctx, model.ContextKeyUserID, userID)
 
 	return ctx, nil
+}
+
+func (h *Handler) HandleApiKey(
+	ctx context.Context,
+	_operationName string,
+	t api.ApiKey,
+) (context.Context, error) {
+	return ctx, errors.New("auth method not supported")
 }
