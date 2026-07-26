@@ -23,6 +23,10 @@ func NewApiKeysService(
 func (s *ApiKeysService) ExchangeApiKey(ctx context.Context, apiKey string) (*model.User, error) {
 	user, err := s.client.GetUserByApiKey(ctx, apiKey)
 	if err != nil {
+		if errors.Is(err, model.ErrUserNotFound) {
+			return nil, model.ErrInvalidApiKey
+		}
+
 		return nil, errors.Wrap(err, "exchange api key")
 	}
 

@@ -2,10 +2,12 @@ package middlewares
 
 import (
 	"context"
+	"errors"
 
 	"github.com/medama-io/medama/api"
 	"github.com/medama-io/medama/model"
 	"github.com/medama-io/medama/util"
+	"github.com/medama-io/medama/util/logger"
 )
 
 type Handler struct {
@@ -53,7 +55,14 @@ func (h *Handler) HandleApiKey(
 ) (context.Context, error) {
 	user, err := h.apiKeys.ExchangeApiKey(ctx, t.APIKey)
 	if err != nil {
-		return nil, model.ErrUnauthorised
+		if errors.Is(err, model.ErrInvalidApiKey) {
+			return nil, model.ErrUnauthorised
+		}
+
+		log := logger.Get()
+		log.Err(err).Msg("failed to authorize using api key")
+
+		return nil, model.ErrInternalServerError
 	}
 
 	ctx = context.WithValue(ctx, model.ContextKeyUserID, user.ID)
