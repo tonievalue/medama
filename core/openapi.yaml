@@ -193,11 +193,13 @@ paths:
         - User
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Update User Info
       description: Update a user account's details.
       operationId: patch-user
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
       requestBody:
         description: User details to update.
         content:
@@ -232,11 +234,13 @@ paths:
         - User
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Delete User
       description: Delete a user account.
       operationId: delete-user
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
       responses:
         "204":
           description: Success No Content
@@ -259,11 +263,13 @@ paths:
         - User
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get Resource Usage
       description: Get the current CPU, memory and disk usage of the server.
       operationId: get-user-usage
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
       responses:
         "200":
           description: OK
@@ -284,11 +290,13 @@ paths:
         - Settings
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: List Tenant Settings
       description: Get a list of all tenant settings.
       operationId: get-tenant-settings
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
       responses:
         "200":
           description: Returns a list of all tenant settings.
@@ -308,17 +316,19 @@ paths:
         - Settings
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Update Tenant Settings
       description: Partial update of tenant settings.
       operationId: patch-tenant-settings
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
       requestBody:
         description: Tenant Settings to update.
         content:
           application/json:
             schema:
-                $ref: "#/components/schemas/TenantSettings"
+              $ref: "#/components/schemas/TenantSettings"
         required: true
       responses:
         "200":
@@ -342,11 +352,13 @@ paths:
         - Website
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: List Websites
       description: Get a list of all websites from the user.
       operationId: get-websites
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Summary"
       responses:
         "200":
@@ -373,6 +385,7 @@ paths:
         - Website
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Add Website
       description: Add a new website.
       operationId: post-websites
@@ -421,11 +434,13 @@ paths:
         - Website
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get Website
       description: Get website details for an individual website.
       operationId: get-websites-id
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
       responses:
         "200":
@@ -450,11 +465,13 @@ paths:
         - Website
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Update Website
       description: Update a website's information.
       operationId: patch-websites-id
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
       requestBody:
         description: Website details to update.
@@ -488,11 +505,13 @@ paths:
         - Website
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Delete Website
       description: Delete a website.
       operationId: delete-websites-id
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
       responses:
         "204":
@@ -516,6 +535,7 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get Stat Summary
       description: Get a summary of the website's stats.
       operationId: get-website-id-summary
@@ -538,6 +558,7 @@ paths:
               - week
               - month
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/PeriodStart"
         - $ref: "#/components/parameters/PeriodEnd"
@@ -577,11 +598,13 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get Page Stats
       description: Get a list of pages and their stats.
       operationId: get-website-id-pages
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/Summary"
         - $ref: "#/components/parameters/PeriodStart"
@@ -624,11 +647,13 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get Time Stats
       description: Get a list of pages and their time stats.
       operationId: get-website-id-time
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/Summary"
         - $ref: "#/components/parameters/PeriodStart"
@@ -671,6 +696,7 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get Referrer Stats
       description: Get a list of referrers and their stats.
       operationId: get-website-id-referrers
@@ -682,6 +708,7 @@ paths:
             type: boolean
             default: true
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/Summary"
         - $ref: "#/components/parameters/PeriodStart"
@@ -726,11 +753,13 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get UTM Source Stats
       description: Get a list of UTM sources and their stats.
       operationId: get-website-id-sources
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/Summary"
         - $ref: "#/components/parameters/PeriodStart"
@@ -775,11 +804,13 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get UTM Medium Stats
       description: Get a list of UTM mediums and their stats.
       operationId: get-website-id-mediums
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/Summary"
         - $ref: "#/components/parameters/PeriodStart"
@@ -824,11 +855,13 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get UTM Campaign Stats
       description: Get a list of UTM campaigns and their stats.
       operationId: get-website-id-campaigns
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/Summary"
         - $ref: "#/components/parameters/PeriodStart"
@@ -873,11 +906,13 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get Browser Stats
       description: Get a list of browsers and their stats.
       operationId: get-website-id-browsers
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/Summary"
         - $ref: "#/components/parameters/PeriodStart"
@@ -922,11 +957,13 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get OS Stats
       description: Get a list of OS and their stats.
       operationId: get-website-id-os
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/Summary"
         - $ref: "#/components/parameters/PeriodStart"
@@ -971,11 +1008,13 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get Device Stats
       description: Get a list of devices and their stats.
       operationId: get-website-id-device
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/Summary"
         - $ref: "#/components/parameters/PeriodStart"
@@ -1020,11 +1059,13 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get Country Stats
       description: Get a list of countries and their stats.
       operationId: get-website-id-country
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/Summary"
         - $ref: "#/components/parameters/PeriodStart"
@@ -1069,6 +1110,7 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get Language Stats
       description: Get a list of languages and their stats.
       operationId: get-website-id-language
@@ -1080,6 +1122,7 @@ paths:
             type: boolean
             default: false
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/Summary"
         - $ref: "#/components/parameters/PeriodStart"
@@ -1124,11 +1167,13 @@ paths:
         - Stats
       security:
         - CookieAuth: []
+        - ApiKey: []
       summary: Get Property Stats
       description: Get a list of custom properties and their stats. If a property name is provided, it will return the stats for that property instead.
       operationId: get-website-id-properties
       parameters:
         - $ref: "#/components/parameters/SessionAuth"
+        - $ref: "#/components/parameters/ApiKey"
         - $ref: "#/components/parameters/Hostname"
         - $ref: "#/components/parameters/PeriodStart"
         - $ref: "#/components/parameters/PeriodEnd"

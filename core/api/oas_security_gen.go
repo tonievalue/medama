@@ -38,7 +38,30 @@ func findAuthorization(h http.Header, prefix string) (string, bool) {
 
 // operationRolesApiKey is a private map storing roles per operation.
 var operationRolesApiKey = map[string][]string{
-	GetUserOperation: []string{},
+	DeleteUserOperation:             []string{},
+	DeleteWebsitesIDOperation:       []string{},
+	GetTenantSettingsOperation:      []string{},
+	GetUserOperation:                []string{},
+	GetUserUsageOperation:           []string{},
+	GetWebsiteIDBrowsersOperation:   []string{},
+	GetWebsiteIDCampaignsOperation:  []string{},
+	GetWebsiteIDCountryOperation:    []string{},
+	GetWebsiteIDDeviceOperation:     []string{},
+	GetWebsiteIDLanguageOperation:   []string{},
+	GetWebsiteIDMediumsOperation:    []string{},
+	GetWebsiteIDOsOperation:         []string{},
+	GetWebsiteIDPagesOperation:      []string{},
+	GetWebsiteIDPropertiesOperation: []string{},
+	GetWebsiteIDReferrersOperation:  []string{},
+	GetWebsiteIDSourcesOperation:    []string{},
+	GetWebsiteIDSummaryOperation:    []string{},
+	GetWebsiteIDTimeOperation:       []string{},
+	GetWebsitesOperation:            []string{},
+	GetWebsitesIDOperation:          []string{},
+	PatchTenantSettingsOperation:    []string{},
+	PatchUserOperation:              []string{},
+	PatchWebsitesIDOperation:        []string{},
+	PostWebsitesOperation:           []string{},
 }
 
 // GetRolesForApiKey returns the required roles for the given operation.

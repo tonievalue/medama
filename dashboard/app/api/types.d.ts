@@ -1252,7 +1252,10 @@ export interface operations {
     "delete-user": {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path?: never;
             cookie?: {
                 /** @description Session token for authentication. */
@@ -1279,7 +1282,10 @@ export interface operations {
     "patch-user": {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path?: never;
             cookie?: {
                 /** @description Session token for authentication. */
@@ -1314,7 +1320,10 @@ export interface operations {
     "get-user-usage": {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path?: never;
             cookie?: {
                 /** @description Session token for authentication. */
@@ -1340,11 +1349,14 @@ export interface operations {
     "get-tenant-settings": {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path?: never;
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         requestBody?: never;
@@ -1366,11 +1378,14 @@ export interface operations {
     "patch-tenant-settings": {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path?: never;
-            cookie: {
+            cookie?: {
                 /** @description Session token for authentication. */
-                _me_sess: components["parameters"]["SessionAuth"];
+                _me_sess?: components["parameters"]["SessionAuth"];
             };
         };
         /** @description Tenant Settings to update. */
@@ -1401,7 +1416,10 @@ export interface operations {
                 /** @description Return a summary of the stats. */
                 summary?: components["parameters"]["Summary"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path?: never;
             cookie?: {
                 /** @description Session token for authentication. */
@@ -1459,7 +1477,10 @@ export interface operations {
     "get-websites-id": {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -1490,7 +1511,10 @@ export interface operations {
     "delete-websites-id": {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -1520,7 +1544,10 @@ export interface operations {
     "patch-websites-id": {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -1590,7 +1617,10 @@ export interface operations {
                 /** @description Value of the property. */
                 prop_value?: components["parameters"]["PropertyValue"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -1656,7 +1686,10 @@ export interface operations {
                 /** @description Offset the results paired with the limit parameter. */
                 offset?: components["parameters"]["Offset"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -1722,7 +1755,10 @@ export interface operations {
                 /** @description Offset the results paired with the limit parameter. */
                 offset?: components["parameters"]["Offset"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -1790,7 +1826,10 @@ export interface operations {
                 /** @description Offset the results paired with the limit parameter. */
                 offset?: components["parameters"]["Offset"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -1857,7 +1896,10 @@ export interface operations {
                 /** @description Offset the results paired with the limit parameter. */
                 offset?: components["parameters"]["Offset"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -1924,7 +1966,10 @@ export interface operations {
                 /** @description Offset the results paired with the limit parameter. */
                 offset?: components["parameters"]["Offset"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -1991,7 +2036,10 @@ export interface operations {
                 /** @description Offset the results paired with the limit parameter. */
                 offset?: components["parameters"]["Offset"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -2058,7 +2106,10 @@ export interface operations {
                 /** @description Offset the results paired with the limit parameter. */
                 offset?: components["parameters"]["Offset"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -2125,7 +2176,10 @@ export interface operations {
                 /** @description Offset the results paired with the limit parameter. */
                 offset?: components["parameters"]["Offset"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -2192,7 +2246,10 @@ export interface operations {
                 /** @description Offset the results paired with the limit parameter. */
                 offset?: components["parameters"]["Offset"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -2259,7 +2316,10 @@ export interface operations {
                 /** @description Offset the results paired with the limit parameter. */
                 offset?: components["parameters"]["Offset"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -2328,7 +2388,10 @@ export interface operations {
                 /** @description Offset the results paired with the limit parameter. */
                 offset?: components["parameters"]["Offset"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];
@@ -2393,7 +2456,10 @@ export interface operations {
                 /** @description Offset the results paired with the limit parameter. */
                 offset?: components["parameters"]["Offset"];
             };
-            header?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
             path: {
                 /** @description Hostname for the website. */
                 hostname: components["parameters"]["Hostname"];

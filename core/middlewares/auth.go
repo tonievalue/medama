@@ -2,7 +2,6 @@ package middlewares
 
 import (
 	"context"
-	"errors"
 
 	"github.com/medama-io/medama/api"
 	"github.com/medama-io/medama/model"
@@ -10,16 +9,21 @@ import (
 )
 
 type Handler struct {
-	auth *util.AuthService
+	auth    *util.AuthService
+	apiKeys *util.ApiKeysService
 }
 
 // Compile time check for Handler.
 var _ api.SecurityHandler = (*Handler)(nil)
 
 // NewAuthHandler returns a new instance of the auth service handler.
-func NewAuthHandler(auth *util.AuthService) *Handler {
+func NewAuthHandler(
+	auth *util.AuthService,
+	apiKeys *util.ApiKeysService,
+) *Handler {
 	return &Handler{
-		auth: auth,
+		auth:    auth,
+		apiKeys: apiKeys,
 	}
 }
 
@@ -47,5 +51,12 @@ func (h *Handler) HandleApiKey(
 	_operationName string,
 	t api.ApiKey,
 ) (context.Context, error) {
-	return ctx, errors.New("auth method not supported")
+	user, err := h.apiKeys.ExchangeApiKey(ctx, t.APIKey)
+	if err != nil {
+		return nil, model.ErrUnauthorised
+	}
+
+	ctx = context.WithValue(ctx, model.ContextKeyUserID, user.ID)
+
+	return ctx, nil
 }

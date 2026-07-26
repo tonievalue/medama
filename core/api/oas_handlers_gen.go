@@ -65,11 +65,29 @@ func (s *Server) handleDeleteUserRequest(args [0]string, argsEscaped bool, w htt
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, DeleteUserOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -116,6 +134,10 @@ func (s *Server) handleDeleteUserRequest(args [0]string, argsEscaped bool, w htt
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 			},
 			Raw: r,
 		}
@@ -193,11 +215,29 @@ func (s *Server) handleDeleteWebsitesIDRequest(args [1]string, argsEscaped bool,
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, DeleteWebsitesIDOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -244,6 +284,10 @@ func (s *Server) handleDeleteWebsitesIDRequest(args [1]string, argsEscaped bool,
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -413,11 +457,29 @@ func (s *Server) handleGetTenantSettingsRequest(args [0]string, argsEscaped bool
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetTenantSettingsOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -464,6 +526,10 @@ func (s *Server) handleGetTenantSettingsRequest(args [0]string, argsEscaped bool
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 			},
 			Raw: r,
 		}
@@ -691,11 +757,29 @@ func (s *Server) handleGetUserUsageRequest(args [0]string, argsEscaped bool, w h
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetUserUsageOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -742,6 +826,10 @@ func (s *Server) handleGetUserUsageRequest(args [0]string, argsEscaped bool, w h
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 			},
 			Raw: r,
 		}
@@ -819,11 +907,29 @@ func (s *Server) handleGetWebsiteIDBrowsersRequest(args [1]string, argsEscaped b
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDBrowsersOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -870,6 +976,10 @@ func (s *Server) handleGetWebsiteIDBrowsersRequest(args [1]string, argsEscaped b
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -1019,11 +1129,29 @@ func (s *Server) handleGetWebsiteIDCampaignsRequest(args [1]string, argsEscaped 
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDCampaignsOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -1070,6 +1198,10 @@ func (s *Server) handleGetWebsiteIDCampaignsRequest(args [1]string, argsEscaped 
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -1219,11 +1351,29 @@ func (s *Server) handleGetWebsiteIDCountryRequest(args [1]string, argsEscaped bo
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDCountryOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -1270,6 +1420,10 @@ func (s *Server) handleGetWebsiteIDCountryRequest(args [1]string, argsEscaped bo
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -1419,11 +1573,29 @@ func (s *Server) handleGetWebsiteIDDeviceRequest(args [1]string, argsEscaped boo
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDDeviceOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -1470,6 +1642,10 @@ func (s *Server) handleGetWebsiteIDDeviceRequest(args [1]string, argsEscaped boo
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -1619,11 +1795,29 @@ func (s *Server) handleGetWebsiteIDLanguageRequest(args [1]string, argsEscaped b
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDLanguageOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -1674,6 +1868,10 @@ func (s *Server) handleGetWebsiteIDLanguageRequest(args [1]string, argsEscaped b
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -1823,11 +2021,29 @@ func (s *Server) handleGetWebsiteIDMediumsRequest(args [1]string, argsEscaped bo
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDMediumsOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -1874,6 +2090,10 @@ func (s *Server) handleGetWebsiteIDMediumsRequest(args [1]string, argsEscaped bo
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -2023,11 +2243,29 @@ func (s *Server) handleGetWebsiteIDOsRequest(args [1]string, argsEscaped bool, w
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDOsOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -2074,6 +2312,10 @@ func (s *Server) handleGetWebsiteIDOsRequest(args [1]string, argsEscaped bool, w
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -2223,11 +2465,29 @@ func (s *Server) handleGetWebsiteIDPagesRequest(args [1]string, argsEscaped bool
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDPagesOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -2274,6 +2534,10 @@ func (s *Server) handleGetWebsiteIDPagesRequest(args [1]string, argsEscaped bool
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -2424,11 +2688,29 @@ func (s *Server) handleGetWebsiteIDPropertiesRequest(args [1]string, argsEscaped
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDPropertiesOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -2475,6 +2757,10 @@ func (s *Server) handleGetWebsiteIDPropertiesRequest(args [1]string, argsEscaped
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -2620,11 +2906,29 @@ func (s *Server) handleGetWebsiteIDReferrersRequest(args [1]string, argsEscaped 
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDReferrersOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -2675,6 +2979,10 @@ func (s *Server) handleGetWebsiteIDReferrersRequest(args [1]string, argsEscaped 
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -2824,11 +3132,29 @@ func (s *Server) handleGetWebsiteIDSourcesRequest(args [1]string, argsEscaped bo
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDSourcesOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -2875,6 +3201,10 @@ func (s *Server) handleGetWebsiteIDSourcesRequest(args [1]string, argsEscaped bo
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -3024,11 +3354,29 @@ func (s *Server) handleGetWebsiteIDSummaryRequest(args [1]string, argsEscaped bo
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDSummaryOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -3083,6 +3431,10 @@ func (s *Server) handleGetWebsiteIDSummaryRequest(args [1]string, argsEscaped bo
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -3220,11 +3572,29 @@ func (s *Server) handleGetWebsiteIDTimeRequest(args [1]string, argsEscaped bool,
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsiteIDTimeOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -3271,6 +3641,10 @@ func (s *Server) handleGetWebsiteIDTimeRequest(args [1]string, argsEscaped bool,
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -3420,11 +3794,29 @@ func (s *Server) handleGetWebsitesRequest(args [0]string, argsEscaped bool, w ht
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsitesOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -3471,6 +3863,10 @@ func (s *Server) handleGetWebsitesRequest(args [0]string, argsEscaped bool, w ht
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "summary",
 					In:   "query",
@@ -3552,11 +3948,29 @@ func (s *Server) handleGetWebsitesIDRequest(args [1]string, argsEscaped bool, w 
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, GetWebsitesIDOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -3603,6 +4017,10 @@ func (s *Server) handleGetWebsitesIDRequest(args [1]string, argsEscaped bool, w 
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -3684,11 +4102,29 @@ func (s *Server) handlePatchTenantSettingsRequest(args [0]string, argsEscaped bo
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, PatchTenantSettingsOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -3750,6 +4186,10 @@ func (s *Server) handlePatchTenantSettingsRequest(args [0]string, argsEscaped bo
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 			},
 			Raw: r,
 		}
@@ -3827,11 +4267,29 @@ func (s *Server) handlePatchUserRequest(args [0]string, argsEscaped bool, w http
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, PatchUserOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -3893,6 +4351,10 @@ func (s *Server) handlePatchUserRequest(args [0]string, argsEscaped bool, w http
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 			},
 			Raw: r,
 		}
@@ -3970,11 +4432,29 @@ func (s *Server) handlePatchWebsitesIDRequest(args [1]string, argsEscaped bool, 
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, PatchWebsitesIDOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {
@@ -4036,6 +4516,10 @@ func (s *Server) handlePatchWebsitesIDRequest(args [1]string, argsEscaped bool, 
 					Name: "_me_sess",
 					In:   "cookie",
 				}: params.MeSess,
+				{
+					Name: "x-api-key",
+					In:   "header",
+				}: params.XAPIKey,
 				{
 					Name: "hostname",
 					In:   "path",
@@ -4388,11 +4872,29 @@ func (s *Server) handlePostWebsitesRequest(args [0]string, argsEscaped bool, w h
 				ctx = sctx
 			}
 		}
+		{
+			sctx, ok, err := s.securityApiKey(ctx, PostWebsitesOperation, r)
+			if err != nil {
+				err = &ogenerrors.SecurityError{
+					OperationContext: opErrContext,
+					Security:         "ApiKey",
+					Err:              err,
+				}
+				defer recordError("Security:ApiKey", err)
+				s.cfg.ErrorHandler(ctx, w, r, err)
+				return
+			}
+			if ok {
+				satisfied[0] |= 1 << 1
+				ctx = sctx
+			}
+		}
 
 		if ok := func() bool {
 		nextRequirement:
 			for _, requirement := range []bitset{
 				{0b00000001},
+				{0b00000010},
 			} {
 				for i, mask := range requirement {
 					if satisfied[i]&mask != mask {

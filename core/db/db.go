@@ -24,6 +24,8 @@ type AppClient interface {
 	GetUser(ctx context.Context, id string) (*model.User, error)
 	// GetUserByUsername retrieves a user from the database by username.
 	GetUserByUsername(ctx context.Context, username string) (*model.User, error)
+	// GetUserByApiKey retrieves a user from the database by assigned api key.
+	GetUserByApiKey(ctx context.Context, apiKey string) (*model.User, error)
 	// UpdateUserUsername updates a user's username in the database.
 	UpdateUserUsername(ctx context.Context, id string, username string) error
 	// UpdateUserPassword updates a user's password in the database.

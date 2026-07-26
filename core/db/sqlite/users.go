@@ -133,6 +133,46 @@ func (c *Client) GetUserByUsername(ctx context.Context, username string) (*model
 	return &user, nil
 }
 
+func (c *Client) GetUserByApiKey(ctx context.Context, apiKey string) (*model.User, error) {
+	// @TODO: Too much redundancy just to retrieve single user
+
+	query := `--sql
+	SELECT id, username, password, settings, date_created, date_updated FROM users WHERE api_key = ?`
+
+	var (
+		user         model.User
+		settingsJSON string
+	)
+
+	err := c.DB.QueryRowxContext(ctx, query, apiKey).Scan(
+		&user.ID,
+		&user.Username,
+		&user.Password,
+		&settingsJSON,
+		&user.DateCreated,
+		&user.DateUpdated,
+	)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, model.ErrUserNotFound
+		}
+
+		return nil, errors.Wrap(err, "db")
+	}
+
+	// Parse the JSON settings
+	if settingsJSON != "" {
+		user.Settings = model.NewDefaultUserSettings()
+
+		err = json.Unmarshal([]byte(settingsJSON), user.Settings)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to unmarshal settings")
+		}
+	}
+
+	return &user, nil
+}
+
 func (c *Client) UpdateUserUsername(ctx context.Context, id string, username string) error {
 	exec := `--sql
 	UPDATE users SET username = :username, date_updated = :date_updated WHERE id = :id`
