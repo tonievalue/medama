@@ -112,6 +112,34 @@ export interface paths {
         patch: operations["patch-user"];
         trace?: never;
     };
+    "/user/api-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get User API Key
+         * @description Get current user configured API key.
+         */
+        get: operations["get-user-api-key"];
+        put?: never;
+        /**
+         * Regenerate User API Key
+         * @description Regenerate current user API key to a random string.
+         */
+        post: operations["regenerate-user-api-key"];
+        /**
+         * Delete User API Key
+         * @description Delete current user API key.
+         */
+        delete: operations["delete-user-api-key"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/user/usage": {
         parameters: {
             query?: never;
@@ -594,6 +622,13 @@ export interface components {
             dateCreated: number;
             /** Format: int64 */
             dateUpdated: number;
+        };
+        /**
+         * UserApiKeyGet
+         * @description Response body for user API key.
+         */
+        UserApiKey: {
+            api_key?: string;
         };
         /**
          * UserUsageGet
@@ -1314,6 +1349,92 @@ export interface operations {
             403: components["responses"]["ForbiddenError"];
             404: components["responses"]["NotFoundError"];
             409: components["responses"]["ConflictError"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    "get-user-api-key": {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
+            path?: never;
+            cookie?: {
+                /** @description Session token for authentication. */
+                _me_sess?: components["parameters"]["SessionAuth"];
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    "X-Api-Commit": components["headers"]["X-Api-Commit"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserApiKey"];
+                };
+            };
+            401: components["responses"]["UnauthorisedError"];
+            404: components["responses"]["NotFoundError"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    "regenerate-user-api-key": {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
+            path?: never;
+            cookie?: {
+                /** @description Session token for authentication. */
+                _me_sess?: components["parameters"]["SessionAuth"];
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    "X-Api-Commit": components["headers"]["X-Api-Commit"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserApiKey"];
+                };
+            };
+            401: components["responses"]["UnauthorisedError"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    "delete-user-api-key": {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Key for accessing instance using API calls. */
+                "x-api-key"?: components["parameters"]["ApiKey"];
+            };
+            path?: never;
+            cookie?: {
+                /** @description Session token for authentication. */
+                _me_sess?: components["parameters"]["SessionAuth"];
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success No Content */
+            204: {
+                headers: {
+                    "X-Api-Commit": components["headers"]["X-Api-Commit"];
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["UnauthorisedError"];
             500: components["responses"]["InternalServerError"];
         };
     };

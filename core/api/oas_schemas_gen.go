@@ -246,6 +246,23 @@ func (s *CookieAuth) SetRoles(val []string) {
 	s.Roles = val
 }
 
+// DeleteUserAPIKeyNoContent is response for DeleteUserAPIKey operation.
+type DeleteUserAPIKeyNoContent struct {
+	XAPICommit OptString
+}
+
+// GetXAPICommit returns the value of XAPICommit.
+func (s *DeleteUserAPIKeyNoContent) GetXAPICommit() OptString {
+	return s.XAPICommit
+}
+
+// SetXAPICommit sets the value of XAPICommit.
+func (s *DeleteUserAPIKeyNoContent) SetXAPICommit(val OptString) {
+	s.XAPICommit = val
+}
+
+func (*DeleteUserAPIKeyNoContent) deleteUserAPIKeyRes() {}
+
 // DeleteUserNoContent is response for DeleteUser operation.
 type DeleteUserNoContent struct {
 	XAPICommit OptString
@@ -1150,10 +1167,12 @@ func (s *InternalServerErrorHeaders) SetResponse(val InternalServerError) {
 	s.Response = val
 }
 
+func (*InternalServerErrorHeaders) deleteUserAPIKeyRes()       {}
 func (*InternalServerErrorHeaders) deleteUserRes()             {}
 func (*InternalServerErrorHeaders) deleteWebsitesIDRes()       {}
 func (*InternalServerErrorHeaders) getEventPingRes()           {}
 func (*InternalServerErrorHeaders) getTenantSettingsRes()      {}
+func (*InternalServerErrorHeaders) getUserAPIKeyRes()          {}
 func (*InternalServerErrorHeaders) getUserRes()                {}
 func (*InternalServerErrorHeaders) getUserUsageRes()           {}
 func (*InternalServerErrorHeaders) getWebsiteIDBrowsersRes()   {}
@@ -1178,6 +1197,7 @@ func (*InternalServerErrorHeaders) postAuthLoginRes()          {}
 func (*InternalServerErrorHeaders) postAuthLogoutRes()         {}
 func (*InternalServerErrorHeaders) postEventHitRes()           {}
 func (*InternalServerErrorHeaders) postWebsitesRes()           {}
+func (*InternalServerErrorHeaders) regenerateUserAPIKeyRes()   {}
 
 type NotFoundError struct {
 	Error NotFoundErrorError `json:"error"`
@@ -1246,6 +1266,7 @@ func (s *NotFoundErrorHeaders) SetResponse(val NotFoundError) {
 
 func (*NotFoundErrorHeaders) deleteUserRes()             {}
 func (*NotFoundErrorHeaders) deleteWebsitesIDRes()       {}
+func (*NotFoundErrorHeaders) getUserAPIKeyRes()          {}
 func (*NotFoundErrorHeaders) getUserRes()                {}
 func (*NotFoundErrorHeaders) getWebsiteIDBrowsersRes()   {}
 func (*NotFoundErrorHeaders) getWebsiteIDCampaignsRes()  {}
@@ -3430,9 +3451,11 @@ func (s *UnauthorisedErrorHeaders) SetResponse(val UnauthorisedError) {
 	s.Response = val
 }
 
+func (*UnauthorisedErrorHeaders) deleteUserAPIKeyRes()       {}
 func (*UnauthorisedErrorHeaders) deleteUserRes()             {}
 func (*UnauthorisedErrorHeaders) deleteWebsitesIDRes()       {}
 func (*UnauthorisedErrorHeaders) getTenantSettingsRes()      {}
+func (*UnauthorisedErrorHeaders) getUserAPIKeyRes()          {}
 func (*UnauthorisedErrorHeaders) getUserRes()                {}
 func (*UnauthorisedErrorHeaders) getUserUsageRes()           {}
 func (*UnauthorisedErrorHeaders) getWebsiteIDBrowsersRes()   {}
@@ -3456,6 +3479,52 @@ func (*UnauthorisedErrorHeaders) patchWebsitesIDRes()        {}
 func (*UnauthorisedErrorHeaders) postAuthLoginRes()          {}
 func (*UnauthorisedErrorHeaders) postAuthLogoutRes()         {}
 func (*UnauthorisedErrorHeaders) postWebsitesRes()           {}
+func (*UnauthorisedErrorHeaders) regenerateUserAPIKeyRes()   {}
+
+// Response body for user API key.
+// Ref: #/components/schemas/UserApiKey
+type UserApiKey struct {
+	APIKey OptString `json:"api_key"`
+}
+
+// GetAPIKey returns the value of APIKey.
+func (s *UserApiKey) GetAPIKey() OptString {
+	return s.APIKey
+}
+
+// SetAPIKey sets the value of APIKey.
+func (s *UserApiKey) SetAPIKey(val OptString) {
+	s.APIKey = val
+}
+
+// UserApiKeyHeaders wraps UserApiKey with response headers.
+type UserApiKeyHeaders struct {
+	XAPICommit OptString
+	Response   UserApiKey
+}
+
+// GetXAPICommit returns the value of XAPICommit.
+func (s *UserApiKeyHeaders) GetXAPICommit() OptString {
+	return s.XAPICommit
+}
+
+// GetResponse returns the value of Response.
+func (s *UserApiKeyHeaders) GetResponse() UserApiKey {
+	return s.Response
+}
+
+// SetXAPICommit sets the value of XAPICommit.
+func (s *UserApiKeyHeaders) SetXAPICommit(val OptString) {
+	s.XAPICommit = val
+}
+
+// SetResponse sets the value of Response.
+func (s *UserApiKeyHeaders) SetResponse(val UserApiKey) {
+	s.Response = val
+}
+
+func (*UserApiKeyHeaders) getUserAPIKeyRes()        {}
+func (*UserApiKeyHeaders) regenerateUserAPIKeyRes() {}
 
 // Response body for getting a user.
 // Ref: #/components/schemas/UserGet

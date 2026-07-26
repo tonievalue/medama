@@ -39,9 +39,11 @@ func findAuthorization(h http.Header, prefix string) (string, bool) {
 // operationRolesApiKey is a private map storing roles per operation.
 var operationRolesApiKey = map[string][]string{
 	DeleteUserOperation:             []string{},
+	DeleteUserAPIKeyOperation:       []string{},
 	DeleteWebsitesIDOperation:       []string{},
 	GetTenantSettingsOperation:      []string{},
 	GetUserOperation:                []string{},
+	GetUserAPIKeyOperation:          []string{},
 	GetUserUsageOperation:           []string{},
 	GetWebsiteIDBrowsersOperation:   []string{},
 	GetWebsiteIDCampaignsOperation:  []string{},
@@ -62,6 +64,7 @@ var operationRolesApiKey = map[string][]string{
 	PatchUserOperation:              []string{},
 	PatchWebsitesIDOperation:        []string{},
 	PostWebsitesOperation:           []string{},
+	RegenerateUserAPIKeyOperation:   []string{},
 }
 
 // GetRolesForApiKey returns the required roles for the given operation.
@@ -88,9 +91,11 @@ func GetRolesForApiKey(operation string) []string {
 // operationRolesCookieAuth is a private map storing roles per operation.
 var operationRolesCookieAuth = map[string][]string{
 	DeleteUserOperation:             []string{},
+	DeleteUserAPIKeyOperation:       []string{},
 	DeleteWebsitesIDOperation:       []string{},
 	GetTenantSettingsOperation:      []string{},
 	GetUserOperation:                []string{},
+	GetUserAPIKeyOperation:          []string{},
 	GetUserUsageOperation:           []string{},
 	GetWebsiteIDBrowsersOperation:   []string{},
 	GetWebsiteIDCampaignsOperation:  []string{},
@@ -111,6 +116,7 @@ var operationRolesCookieAuth = map[string][]string{
 	PatchUserOperation:              []string{},
 	PatchWebsitesIDOperation:        []string{},
 	PostWebsitesOperation:           []string{},
+	RegenerateUserAPIKeyOperation:   []string{},
 }
 
 // GetRolesForCookieAuth returns the required roles for the given operation.

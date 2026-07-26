@@ -276,3 +276,66 @@ func (h *Handler) DeleteUser(
 
 	return &api.DeleteUserNoContent{}, nil
 }
+
+func (h *Handler) GetUserAPIKey(
+	ctx context.Context,
+	_params api.GetUserAPIKeyParams,
+) (api.GetUserAPIKeyRes, error) {
+	userID, ok := ctx.Value(model.ContextKeyUserID).(string)
+	if !ok {
+		return ErrUnauthorised(model.ErrSessionNotFound), nil
+	}
+
+	user, err := h.db.GetUser(ctx, userID)
+	if err != nil {
+		return nil, errors.Wrap(err, "services")
+	}
+
+	if user.ApiKey == nil {
+		return ErrNotFound(err), nil
+	}
+
+	return &api.UserApiKeyHeaders{
+		Response: api.UserApiKey{
+			APIKey: api.OptString{Value: *user.ApiKey, Set: true},
+		},
+	}, nil
+}
+
+func (h *Handler) RegenerateUserAPIKey(
+	ctx context.Context,
+	_params api.RegenerateUserAPIKeyParams,
+) (api.RegenerateUserAPIKeyRes, error) {
+	userID, ok := ctx.Value(model.ContextKeyUserID).(string)
+	if !ok {
+		return ErrUnauthorised(model.ErrSessionNotFound), nil
+	}
+
+	token, err := h.apiKeys.RegenerateUserApiKey(ctx, userID)
+	if err != nil {
+		return nil, errors.Wrap(err, "services")
+	}
+
+	return &api.UserApiKeyHeaders{
+		Response: api.UserApiKey{
+			APIKey: api.OptString{Value: token, Set: true},
+		},
+	}, nil
+}
+
+func (h *Handler) DeleteUserAPIKey(
+	ctx context.Context,
+	_params api.DeleteUserAPIKeyParams,
+) (api.DeleteUserAPIKeyRes, error) {
+	userID, ok := ctx.Value(model.ContextKeyUserID).(string)
+	if !ok {
+		return ErrUnauthorised(model.ErrSessionNotFound), nil
+	}
+
+	err := h.apiKeys.RevokeUserApiKey(ctx, userID)
+	if err != nil {
+		return nil, errors.Wrap(err, "services")
+	}
+
+	return &api.DeleteUserAPIKeyNoContent{}, nil
+}

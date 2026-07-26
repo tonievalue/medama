@@ -32,6 +32,8 @@ type AppClient interface {
 	UpdateUserPassword(ctx context.Context, id string, password string) error
 	// UpdateUserSettings updates a user's settings in the database.
 	UpdateUserSettings(ctx context.Context, id string, settings *model.UserSettings) error
+	// UpdateUserApiKey updates a user's api key in the database.
+	UpdateUserApiKey(ctx context.Context, id string, apiKey *string) error
 	// DeleteUser deletes a user from the database.
 	DeleteUser(ctx context.Context, id string) error
 

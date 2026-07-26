@@ -129,6 +129,120 @@ func decodeDeleteUserParams(args [0]string, argsEscaped bool, r *http.Request) (
 	return params, nil
 }
 
+// DeleteUserAPIKeyParams is parameters of delete-user-api-key operation.
+type DeleteUserAPIKeyParams struct {
+	// Session token for authentication.
+	MeSess OptString `json:",omitempty,omitzero"`
+	// Key for accessing instance using API calls.
+	XAPIKey OptString `json:",omitempty,omitzero"`
+}
+
+func unpackDeleteUserAPIKeyParams(packed middleware.Parameters) (params DeleteUserAPIKeyParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "_me_sess",
+			In:   "cookie",
+		}
+		if v, ok := packed[key]; ok {
+			params.MeSess = v.(OptString)
+		}
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "x-api-key",
+			In:   "header",
+		}
+		if v, ok := packed[key]; ok {
+			params.XAPIKey = v.(OptString)
+		}
+	}
+	return params
+}
+
+func decodeDeleteUserAPIKeyParams(args [0]string, argsEscaped bool, r *http.Request) (params DeleteUserAPIKeyParams, _ error) {
+	h := uri.NewHeaderDecoder(r.Header)
+	c := uri.NewCookieDecoder(r)
+	// Decode cookie: _me_sess.
+	if err := func() error {
+		cfg := uri.CookieParameterDecodingConfig{
+			Name:    "_me_sess",
+			Explode: true,
+		}
+		if err := c.HasParam(cfg); err == nil {
+			if err := c.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotMeSessVal string
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToString(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotMeSessVal = c
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.MeSess.SetTo(paramsDotMeSessVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "_me_sess",
+			In:   "cookie",
+			Err:  err,
+		}
+	}
+	// Decode header: x-api-key.
+	if err := func() error {
+		cfg := uri.HeaderParameterDecodingConfig{
+			Name:    "x-api-key",
+			Explode: false,
+		}
+		if err := h.HasParam(cfg); err == nil {
+			if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotXAPIKeyVal string
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToString(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotXAPIKeyVal = c
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.XAPIKey.SetTo(paramsDotXAPIKeyVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "x-api-key",
+			In:   "header",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
 // DeleteWebsitesIDParams is parameters of delete-websites-id operation.
 type DeleteWebsitesIDParams struct {
 	// Session token for authentication.
@@ -578,6 +692,120 @@ func unpackGetUserParams(packed middleware.Parameters) (params GetUserParams) {
 }
 
 func decodeGetUserParams(args [0]string, argsEscaped bool, r *http.Request) (params GetUserParams, _ error) {
+	h := uri.NewHeaderDecoder(r.Header)
+	c := uri.NewCookieDecoder(r)
+	// Decode cookie: _me_sess.
+	if err := func() error {
+		cfg := uri.CookieParameterDecodingConfig{
+			Name:    "_me_sess",
+			Explode: true,
+		}
+		if err := c.HasParam(cfg); err == nil {
+			if err := c.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotMeSessVal string
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToString(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotMeSessVal = c
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.MeSess.SetTo(paramsDotMeSessVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "_me_sess",
+			In:   "cookie",
+			Err:  err,
+		}
+	}
+	// Decode header: x-api-key.
+	if err := func() error {
+		cfg := uri.HeaderParameterDecodingConfig{
+			Name:    "x-api-key",
+			Explode: false,
+		}
+		if err := h.HasParam(cfg); err == nil {
+			if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotXAPIKeyVal string
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToString(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotXAPIKeyVal = c
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.XAPIKey.SetTo(paramsDotXAPIKeyVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "x-api-key",
+			In:   "header",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
+// GetUserAPIKeyParams is parameters of get-user-api-key operation.
+type GetUserAPIKeyParams struct {
+	// Session token for authentication.
+	MeSess OptString `json:",omitempty,omitzero"`
+	// Key for accessing instance using API calls.
+	XAPIKey OptString `json:",omitempty,omitzero"`
+}
+
+func unpackGetUserAPIKeyParams(packed middleware.Parameters) (params GetUserAPIKeyParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "_me_sess",
+			In:   "cookie",
+		}
+		if v, ok := packed[key]; ok {
+			params.MeSess = v.(OptString)
+		}
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "x-api-key",
+			In:   "header",
+		}
+		if v, ok := packed[key]; ok {
+			params.XAPIKey = v.(OptString)
+		}
+	}
+	return params
+}
+
+func decodeGetUserAPIKeyParams(args [0]string, argsEscaped bool, r *http.Request) (params GetUserAPIKeyParams, _ error) {
 	h := uri.NewHeaderDecoder(r.Header)
 	c := uri.NewCookieDecoder(r)
 	// Decode cookie: _me_sess.
@@ -14796,6 +15024,120 @@ func decodePostEventHitParams(args [0]string, argsEscaped bool, r *http.Request)
 	}(); err != nil {
 		return params, &ogenerrors.DecodeParamError{
 			Name: "Accept-Language",
+			In:   "header",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
+
+// RegenerateUserAPIKeyParams is parameters of regenerate-user-api-key operation.
+type RegenerateUserAPIKeyParams struct {
+	// Session token for authentication.
+	MeSess OptString `json:",omitempty,omitzero"`
+	// Key for accessing instance using API calls.
+	XAPIKey OptString `json:",omitempty,omitzero"`
+}
+
+func unpackRegenerateUserAPIKeyParams(packed middleware.Parameters) (params RegenerateUserAPIKeyParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "_me_sess",
+			In:   "cookie",
+		}
+		if v, ok := packed[key]; ok {
+			params.MeSess = v.(OptString)
+		}
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "x-api-key",
+			In:   "header",
+		}
+		if v, ok := packed[key]; ok {
+			params.XAPIKey = v.(OptString)
+		}
+	}
+	return params
+}
+
+func decodeRegenerateUserAPIKeyParams(args [0]string, argsEscaped bool, r *http.Request) (params RegenerateUserAPIKeyParams, _ error) {
+	h := uri.NewHeaderDecoder(r.Header)
+	c := uri.NewCookieDecoder(r)
+	// Decode cookie: _me_sess.
+	if err := func() error {
+		cfg := uri.CookieParameterDecodingConfig{
+			Name:    "_me_sess",
+			Explode: true,
+		}
+		if err := c.HasParam(cfg); err == nil {
+			if err := c.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotMeSessVal string
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToString(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotMeSessVal = c
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.MeSess.SetTo(paramsDotMeSessVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "_me_sess",
+			In:   "cookie",
+			Err:  err,
+		}
+	}
+	// Decode header: x-api-key.
+	if err := func() error {
+		cfg := uri.HeaderParameterDecodingConfig{
+			Name:    "x-api-key",
+			Explode: false,
+		}
+		if err := h.HasParam(cfg); err == nil {
+			if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+				var paramsDotXAPIKeyVal string
+				if err := func() error {
+					val, err := d.DecodeValue()
+					if err != nil {
+						return err
+					}
+
+					c, err := conv.ToString(val)
+					if err != nil {
+						return err
+					}
+
+					paramsDotXAPIKeyVal = c
+					return nil
+				}(); err != nil {
+					return err
+				}
+				params.XAPIKey.SetTo(paramsDotXAPIKeyVal)
+				return nil
+			}); err != nil {
+				return err
+			}
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "x-api-key",
 			In:   "header",
 			Err:  err,
 		}

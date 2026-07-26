@@ -8,6 +8,10 @@ import (
 	"github.com/medama-io/medama/model"
 )
 
+const (
+	ApiKeyLength = 64
+)
+
 type ApiKeysService struct {
 	client db.AppClient
 }
@@ -27,8 +31,28 @@ func (s *ApiKeysService) ExchangeApiKey(ctx context.Context, apiKey string) (*mo
 			return nil, model.ErrInvalidApiKey
 		}
 
-		return nil, errors.Wrap(err, "exchange api key")
+		return nil, errors.Wrap(err, "api keys service")
 	}
 
 	return user, nil
+}
+
+func (s *ApiKeysService) RegenerateUserApiKey(ctx context.Context, userID string) (string, error) {
+	token := GenerateRandomString(ApiKeyLength)
+
+	err := s.client.UpdateUserApiKey(ctx, userID, &token)
+	if err != nil {
+		return "", errors.Wrap(err, "api keys service")
+	}
+
+	return token, nil
+}
+
+func (s *ApiKeysService) RevokeUserApiKey(ctx context.Context, userID string) error {
+	err := s.client.UpdateUserApiKey(ctx, userID, nil)
+	if err != nil {
+		return errors.Wrap(err, "api keys service")
+	}
+
+	return nil
 }
