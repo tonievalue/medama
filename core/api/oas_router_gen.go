@@ -11,20 +11,23 @@ import (
 )
 
 var (
-	rn28AllowedHeaders = map[string]string{
+	rn29AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
-	rn32AllowedHeaders = map[string]string{
+	rn33AllowedHeaders = map[string]string{
 		"POST": "Accept-Language,Content-Type,User-Agent",
 	}
 	rn5AllowedHeaders = map[string]string{
 		"GET": "If-Modified-Since",
 	}
+	rn6AllowedHeaders = map[string]string{
+		"PATCH": "Content-Type",
+	}
 	rn1AllowedHeaders = map[string]string{
 		"GET":   "X-Api-Key",
 		"PATCH": "Content-Type",
 	}
-	rn27AllowedHeaders = map[string]string{
+	rn28AllowedHeaders = map[string]string{
 		"POST": "Content-Type",
 	}
 	rn4AllowedHeaders = map[string]string{
@@ -111,7 +114,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						default:
 							s.notAllowed(w, r, notAllowedParams{
 								allowedMethods: "POST",
-								allowedHeaders: rn28AllowedHeaders,
+								allowedHeaders: rn29AllowedHeaders,
 								acceptPost:     "application/json",
 								acceptPatch:    "",
 							})
@@ -175,7 +178,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						default:
 							s.notAllowed(w, r, notAllowedParams{
 								allowedMethods: "POST",
-								allowedHeaders: rn32AllowedHeaders,
+								allowedHeaders: rn33AllowedHeaders,
 								acceptPost:     "application/json",
 								acceptPatch:    "",
 							})
@@ -209,6 +212,33 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						return
 					}
 
+				}
+
+			case 't': // Prefix: "tenant/settings"
+
+				if l := len("tenant/settings"); len(elem) >= l && elem[0:l] == "tenant/settings" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				if len(elem) == 0 {
+					// Leaf node.
+					switch r.Method {
+					case "GET":
+						s.handleGetTenantSettingsRequest([0]string{}, elemIsEscaped, w, r)
+					case "PATCH":
+						s.handlePatchTenantSettingsRequest([0]string{}, elemIsEscaped, w, r)
+					default:
+						s.notAllowed(w, r, notAllowedParams{
+							allowedMethods: "GET,PATCH",
+							allowedHeaders: rn6AllowedHeaders,
+							acceptPost:     "",
+							acceptPatch:    "application/json",
+						})
+					}
+
+					return
 				}
 
 			case 'u': // Prefix: "user"
@@ -725,7 +755,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						default:
 							s.notAllowed(w, r, notAllowedParams{
 								allowedMethods: "GET,POST",
-								allowedHeaders: rn27AllowedHeaders,
+								allowedHeaders: rn28AllowedHeaders,
 								acceptPost:     "application/json",
 								acceptPatch:    "",
 							})
@@ -1008,6 +1038,40 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 						}
 					}
 
+				}
+
+			case 't': // Prefix: "tenant/settings"
+
+				if l := len("tenant/settings"); len(elem) >= l && elem[0:l] == "tenant/settings" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				if len(elem) == 0 {
+					// Leaf node.
+					switch method {
+					case "GET":
+						r.name = GetTenantSettingsOperation
+						r.summary = "List Tenant Settings"
+						r.operationID = "get-tenant-settings"
+						r.operationGroup = ""
+						r.pathPattern = "/tenant/settings"
+						r.args = args
+						r.count = 0
+						return r, true
+					case "PATCH":
+						r.name = PatchTenantSettingsOperation
+						r.summary = "Update Tenant Settings"
+						r.operationID = "patch-tenant-settings"
+						r.operationGroup = ""
+						r.pathPattern = "/tenant/settings"
+						r.args = args
+						r.count = 0
+						return r, true
+					default:
+						return
+					}
 				}
 
 			case 'u': // Prefix: "user"
