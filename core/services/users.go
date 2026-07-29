@@ -292,7 +292,7 @@ func (h *Handler) GetUserAPIKey(
 	}
 
 	if user.ApiKey == nil {
-		return ErrNotFound(err), nil
+		return ErrNotFound(model.ErrSessionNotFound), nil
 	}
 
 	return &api.UserApiKeyHeaders{
