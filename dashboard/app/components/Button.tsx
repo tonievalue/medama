@@ -2,9 +2,13 @@ import { VisuallyHidden } from '@mantine/core';
 import { X } from 'lucide-react';
 import type React from 'react';
 import { Link, type LinkProps } from 'react-router';
+import classes from './Button.module.css';
+
+type ButtonColor = 'primary' | 'danger';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	loading?: boolean;
+	color?: ButtonColor;
 	children: React.ReactNode;
 }
 
@@ -12,24 +16,36 @@ interface ButtonLinkProps extends LinkProps {
 	variant?: 'filled' | 'outline';
 }
 
-interface ButtonIconProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonIconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	label: string;
 	children: React.ReactNode;
 }
 
 type CloseButtonProps = Omit<ButtonIconProps, 'children'>;
 
+const ButtonColorClass = (color?: ButtonColor) => {
+	switch (color) {
+		case 'danger':
+			return classes['button--danger'];
+
+		default:
+			return '';
+	}
+};
+
 const Button = ({
 	loading,
 	disabled,
 	children,
 	className,
+	color,
 	...rest
 }: ButtonProps) => {
+	const defaultClassName = `button ${ButtonColorClass(color)}`;
+
 	return (
 		<button
-			className={className ? className : 'button'}
+			className={className ? className : defaultClassName}
 			disabled={loading || disabled}
 			aria-busy={loading ? 'true' : 'false'}
 			{...rest}
