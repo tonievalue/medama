@@ -19,14 +19,16 @@ func (c *Client) CreateUser(ctx context.Context, user *model.User) error {
 		password,
 		settings,
 		date_created,
-		date_updated
+		date_updated,
+		api_key
 	) VALUES (
 		:id,
 		:username,
 		:password,
 		:settings,
 		:date_created,
-		:date_updated
+		:date_updated,
+		:api_key
 	)`
 
 	// Marshal settings to JSON
@@ -42,6 +44,7 @@ func (c *Client) CreateUser(ctx context.Context, user *model.User) error {
 		"settings":     string(settingsJSON),
 		"date_created": user.DateCreated,
 		dateUpdatedKey: user.DateUpdated,
+		"api_key":      user.ApiKey,
 	}
 
 	_, err = c.NamedExecContext(ctx, exec, paramMap)
