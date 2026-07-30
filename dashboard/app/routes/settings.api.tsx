@@ -1,17 +1,18 @@
 import { Flex, Input } from '@mantine/core';
-import type { Route } from './+types/settings.api';
+import { Trash2 } from 'lucide-react';
+import { useCallback, useState } from 'react';
 import {
 	deleteUserApiKey,
 	getUserApiKey,
 	regenerateUserApiKey,
 } from '@/api/user';
-import { SectionStack } from '@/components/settings/Section';
-import { useCallback, useState } from 'react';
-import { PasswordInput } from '@/components/Input';
-import { Button } from '@/components/Button';
-import { Trash2 } from 'lucide-react';
-import { ModalChild, ModalWrapper } from '@/components/Modal';
 import { Anchor } from '@/components/Anchor';
+import { Button } from '@/components/Button';
+import { PasswordInput } from '@/components/Input';
+import { ModalChild, ModalWrapper } from '@/components/Modal';
+import { SectionStack } from '@/components/settings/Section';
+import type { ApiError } from '@/api/client';
+import type { Route } from './+types/settings.api';
 
 type ApiSettingsModalState = 'regenerate' | 'delete' | 'hidden';
 
@@ -21,8 +22,8 @@ export const clientLoader = async () => {
 		return {
 			apiKey: userApiKey.data?.api_key,
 		};
-	} catch (err: any) {
-		if (err?.init?.status === 404) {
+	} catch (err: unknown) {
+		if ((err as ApiError)?.init?.status === 404) {
 			return { apiKey: null };
 		}
 

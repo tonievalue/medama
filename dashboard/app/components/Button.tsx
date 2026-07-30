@@ -16,7 +16,8 @@ interface ButtonLinkProps extends LinkProps {
 	variant?: 'filled' | 'outline';
 }
 
-interface ButtonIconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonIconProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	label: string;
 	children: React.ReactNode;
 }
