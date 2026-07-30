@@ -1,6 +1,7 @@
 import { Flex, Input } from '@mantine/core';
 import { Trash2 } from 'lucide-react';
 import { useCallback, useState } from 'react';
+import type { ApiError } from '@/api/client';
 import {
 	deleteUserApiKey,
 	getUserApiKey,
@@ -11,7 +12,6 @@ import { Button } from '@/components/Button';
 import { PasswordInput } from '@/components/Input';
 import { ModalChild, ModalWrapper } from '@/components/Modal';
 import { SectionStack } from '@/components/settings/Section';
-import type { ApiError } from '@/api/client';
 import type { Route } from './+types/settings.api';
 
 type ApiSettingsModalState = 'regenerate' | 'delete' | 'hidden';
