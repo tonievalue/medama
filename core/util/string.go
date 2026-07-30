@@ -1,15 +1,19 @@
 package util
 
-import "math/rand/v2"
+import (
+	"crypto/rand"
+	"encoding/base32"
 
-func GenerateRandomString(length int) string {
-	charset := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-	token := make([]byte, length)
+	"github.com/go-faster/errors"
+)
 
-	for i := range token {
-		b := rand.IntN(len(charset))
-		token[i] = charset[b]
+func GenerateRandomString(length int) (string, error) {
+	randomBytes := make([]byte, length)
+
+	_, err := rand.Read(randomBytes)
+	if err != nil {
+		return "", errors.Wrap(err, "random string")
 	}
 
-	return string(token)
+	return base32.StdEncoding.EncodeToString(randomBytes)[:length], nil
 }

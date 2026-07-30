@@ -38,9 +38,12 @@ func (s *ApiKeysService) ExchangeApiKey(ctx context.Context, apiKey string) (*mo
 }
 
 func (s *ApiKeysService) RegenerateUserApiKey(ctx context.Context, userID string) (string, error) {
-	token := GenerateRandomString(ApiKeyLength)
+	token, err := GenerateRandomString(ApiKeyLength)
+	if err != nil {
+		return "", errors.Wrap(err, "api keys service")
+	}
 
-	err := s.client.UpdateUserApiKey(ctx, userID, &token)
+	err = s.client.UpdateUserApiKey(ctx, userID, &token)
 	if err != nil {
 		return "", errors.Wrap(err, "api keys service")
 	}

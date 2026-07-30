@@ -14,6 +14,8 @@ import (
 )
 
 func NewInMemoryDatabase(t *testing.T) (*sqlite.Client, *duckdb.Client) {
+	t.Helper()
+
 	assert := assert.New(t)
 	require := require.New(t)
 	ctx := t.Context()

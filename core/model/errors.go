@@ -22,7 +22,7 @@ var (
 	// API keys
 	// ErrInvalidApiKey is returned when api key could not be found or is invalid.
 	ErrInvalidApiKey = errors.New("invalid api key")
-	// ErrApiKeyNotFound is returned when api key has not been found
+	// ErrApiKeyNotFound is returned when api key has not been found.
 	ErrApiKeyNotFound = errors.New("api key not found")
 
 	// Events

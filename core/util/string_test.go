@@ -6,6 +6,7 @@ import (
 
 	"github.com/medama-io/medama/util"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGeneratesRandomString(t *testing.T) {
@@ -13,7 +14,8 @@ func TestGeneratesRandomString(t *testing.T) {
 
 	for _, sl := range stringLengths {
 		t.Run(fmt.Sprintf("String length %d", sl), func(t *testing.T) {
-			s := util.GenerateRandomString(sl)
+			s, err := util.GenerateRandomString(sl)
+			require.NoError(t, err)
 			assert.Len(t, s, sl)
 		})
 	}

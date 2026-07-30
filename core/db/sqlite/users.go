@@ -160,12 +160,13 @@ func (c *Client) UpdateUserApiKey(ctx context.Context, id string, apiKey *string
 	exec := `--sql
 	UPDATE users SET api_key = :api_key, date_updated = :date_updated WHERE id = :id`
 
-	_, err := c.NamedExecContext(ctx, exec, map[string]any{
+	paramMap := map[string]any{
 		"id":           id,
 		"api_key":      apiKey,
 		"date_updated": time.Now().Unix(),
-	})
+	}
 
+	_, err := c.NamedExecContext(ctx, exec, paramMap)
 	if err != nil {
 		return errors.Wrap(err, "failed to update user api key")
 	}
@@ -195,7 +196,11 @@ func (c *Client) DeleteUser(ctx context.Context, id string) error {
 	return nil
 }
 
-func (c *Client) fetchUser(ctx context.Context, query string, args interface{}) (*model.User, error) {
+func (c *Client) fetchUser(
+	ctx context.Context,
+	query string,
+	args interface{},
+) (*model.User, error) {
 	var (
 		user         model.User
 		settingsJSON string
