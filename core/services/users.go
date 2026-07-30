@@ -52,6 +52,10 @@ func (h *Handler) GetUserUsage(
 	ctx context.Context,
 	_params api.GetUserUsageParams,
 ) (api.GetUserUsageRes, error) {
+	if _, ok := ctx.Value(model.ContextKeyUserID).(string); !ok {
+		return ErrUnauthorised(model.ErrSessionNotFound), nil
+	}
+
 	// CPU statistics.
 	cpuCores, err := cpu.CountsWithContext(ctx, false)
 	if err != nil {
