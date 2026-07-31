@@ -16,6 +16,10 @@ import type { Route } from './+types/settings.api';
 
 type ApiSettingsModalState = 'regenerate' | 'delete' | 'hidden';
 
+export const meta: Route.MetaFunction = () => {
+	return [{ title: 'API Settings | Medama' }];
+};
+
 export const clientLoader = async () => {
 	try {
 		const userApiKey = await getUserApiKey();
